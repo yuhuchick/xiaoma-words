@@ -1,0 +1,107 @@
+{
+    "name" : "小马单词",
+    "appid" : "",
+    "description" : "可爱的单词学习小程序，让学习变得更有趣",
+    "versionName" : "1.0.0",
+    "versionCode" : "100",
+    "transformPx" : false,
+    /* 5+App特有相关 */
+    "app-plus" : {
+        "usingComponents" : true,
+        "nvueStyleCompiler" : "uni-app",
+        "compilerVersion" : 3,
+        "splashscreen" : {
+            "alwaysShowBeforeRender" : true,
+            "waiting" : true,
+            "autoclose" : true,
+            "delay" : 0
+        },
+        /* 模块配置 */
+        "modules" : {},
+        /* 应用发布信息 */
+        "distribute" : {
+            /* android打包配置 */
+            "android" : {
+                "permissions" : [
+                    "<uses-permission android:name=\"android.permission.CHANGE_NETWORK_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\"/>",
+                    "<uses-permission android:name=\"android.permission.VIBRATE\"/>",
+                    "<uses-permission android:name=\"android.permission.READ_LOGS\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>",
+                    "<uses-feature android:name=\"android.hardware.camera.autofocus\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.CAMERA\"/>",
+                    "<uses-permission android:name=\"android.permission.GET_ACCOUNTS\"/>",
+                    "<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.CHANGE_WIFI_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>",
+                    "<uses-permission android:name=\"android.permission.FLASHLIGHT\"/>",
+                    "<uses-feature android:name=\"android.hardware.camera\"/>",
+                    "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>"
+                ],
+                "icon" : {
+                    "hdpi" : "static/app-icon.svg",
+                    "xhdpi" : "static/app-icon.svg",
+                    "xxhdpi" : "static/app-icon.svg",
+                    "xxxhdpi" : "static/app-icon.svg"
+                }
+            },
+            /* ios打包配置 */
+            "ios" : {
+                "icon" : {
+                    "appstore" : "static/app-icon.svg",
+                    "ipad" : {
+                        "app" : "static/app-icon.svg",
+                        "app@2x" : "static/app-icon.svg",
+                        "notification" : "static/app-icon.svg",
+                        "notification@2x" : "static/app-icon.svg",
+                        "proapp@2x" : "static/app-icon.svg",
+                        "settings" : "static/app-icon.svg",
+                        "settings@2x" : "static/app-icon.svg",
+                        "spotlight" : "static/app-icon.svg",
+                        "spotlight@2x" : "static/app-icon.svg"
+                    },
+                    "iphone" : {
+                        "app@2x" : "static/app-icon.svg",
+                        "app@3x" : "static/app-icon.svg",
+                        "notification@2x" : "static/app-icon.svg",
+                        "notification@3x" : "static/app-icon.svg",
+                        "settings@2x" : "static/app-icon.svg",
+                        "settings@3x" : "static/app-icon.svg",
+                        "spotlight@2x" : "static/app-icon.svg",
+                        "spotlight@3x" : "static/app-icon.svg"
+                    }
+                }
+            },
+            /* SDK配置 */
+            "sdkConfigs" : {}
+        }
+    },
+    /* 快应用特有相关 */
+    "quickapp" : {},
+    /* 小程序特有相关 */
+    "mp-weixin" : {
+        "appid" : "",
+        "setting" : {
+            "urlCheck" : false
+        },
+        "usingComponents" : true,
+        "icon" : "static/app-icon.svg"
+    },
+    "mp-alipay" : {
+        "usingComponents" : true,
+        "icon" : "static/app-icon.svg"
+    },
+    "mp-baidu" : {
+        "usingComponents" : true,
+        "icon" : "static/app-icon.svg"
+    },
+    "mp-toutiao" : {
+        "usingComponents" : true,
+        "icon" : "static/app-icon.svg"
+    },
+    "uniStatistics" : {
+        "enable" : false
+    },
+    "vueVersion" : "3"
+}

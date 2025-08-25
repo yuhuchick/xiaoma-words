@@ -1,0 +1,308 @@
+
+.container.data-v-6e8913ab {
+	min-height: 100vh;
+	background: #f8f9fa;
+	padding: 0;
+}
+
+/* .status-bar {
+	height: 44px;
+	width: 100%;
+} */
+.header.data-v-6e8913ab {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 30rpx;
+	background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+	color: #ffffff;
+}
+.stats-info.data-v-6e8913ab {
+	display: flex;
+	flex-direction: column;
+	gap: 10rpx;
+}
+.stats-title.data-v-6e8913ab {
+	font-size: 28rpx;
+	color: rgba(255, 255, 255, 0.9);
+}
+.stats-number.data-v-6e8913ab {
+	display: flex;
+	align-items: baseline;
+	gap: 10rpx;
+}
+.number.data-v-6e8913ab {
+	font-size: 48rpx;
+	font-weight: bold;
+	color: #ffffff;
+}
+.unit.data-v-6e8913ab {
+	font-size: 24rpx;
+	color: rgba(255, 255, 255, 0.8);
+}
+.points-info.data-v-6e8913ab {
+	display: flex;
+	align-items: center;
+	gap: 10rpx;
+	background: rgba(255, 255, 255, 0.2);
+	padding: 15rpx 20rpx;
+	border-radius: 25rpx;
+}
+.points-icon.data-v-6e8913ab {
+	font-size: 32rpx;
+}
+.points-number.data-v-6e8913ab {
+	font-size: 32rpx;
+	font-weight: bold;
+	color: #ffffff;
+}
+.checkin-card.data-v-6e8913ab {
+	margin: 30rpx;
+	background: #ffffff;
+	border-radius: 20rpx;
+	padding: 30rpx;
+	box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.1);
+}
+.checkin-header.data-v-6e8913ab {
+	margin-bottom: 25rpx;
+}
+.checkin-title.data-v-6e8913ab {
+	font-size: 32rpx;
+	font-weight: 600;
+	color: #2c3e50;
+	display: block;
+	margin-bottom: 8rpx;
+}
+.checkin-subtitle.data-v-6e8913ab {
+	font-size: 24rpx;
+	color: #6c757d;
+}
+.checkin-content.data-v-6e8913ab {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.streak-info.data-v-6e8913ab {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 5rpx;
+}
+.streak-number.data-v-6e8913ab {
+	font-size: 48rpx;
+	font-weight: bold;
+	color: #ff6b6b;
+}
+.streak-label.data-v-6e8913ab {
+	font-size: 24rpx;
+	color: #6c757d;
+}
+.checkin-button.data-v-6e8913ab {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 10rpx;
+	padding: 25rpx 40rpx;
+	background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%);
+	border-radius: 25rpx;
+	transition: all 0.3s ease;
+}
+.checkin-button.checked.data-v-6e8913ab {
+	background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+}
+.checkin-button.data-v-6e8913ab:active {
+	transform: scale(0.95);
+}
+.checkin-icon.data-v-6e8913ab {
+	font-size: 40rpx;
+	color: #ffffff;
+}
+.checkin-text.data-v-6e8913ab {
+	font-size: 26rpx;
+	color: #ffffff;
+	font-weight: 600;
+}
+.filter-tabs.data-v-6e8913ab {
+	display: flex;
+	padding: 20rpx 30rpx;
+	gap: 20rpx;
+	background: #ffffff;
+	margin: 0 30rpx;
+	border-radius: 15rpx;
+	box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.08);
+}
+.tab.data-v-6e8913ab {
+	padding: 15rpx 25rpx;
+	border-radius: 20rpx;
+	background: #f8f9fa;
+	transition: all 0.3s ease;
+}
+.tab.active.data-v-6e8913ab {
+	background: #4A90E2;
+}
+.tab text.data-v-6e8913ab {
+	font-size: 26rpx;
+	color: #6c757d;
+	transition: all 0.3s ease;
+}
+.tab.active text.data-v-6e8913ab {
+	color: #ffffff;
+	font-weight: 600;
+}
+.calendar-section.data-v-6e8913ab {
+	margin: 30rpx;
+	background: #ffffff;
+	border-radius: 20rpx;
+	padding: 30rpx;
+	box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.1);
+}
+.calendar-header.data-v-6e8913ab {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 20rpx;
+	padding: 20rpx 0;
+}
+.month-nav.data-v-6e8913ab {
+	width: 60rpx;
+	height: 60rpx;
+	background: #f8f9fa;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: all 0.3s ease;
+}
+.month-nav.data-v-6e8913ab:active {
+	background: #e9ecef;
+	transform: scale(0.95);
+}
+.nav-icon.data-v-6e8913ab {
+	font-size: 36rpx;
+	color: #6c757d;
+	font-weight: bold;
+}
+.current-month.data-v-6e8913ab {
+	font-size: 32rpx;
+	font-weight: 600;
+	color: #2c3e50;
+}
+.calendar-weekdays.data-v-6e8913ab {
+	display: grid;
+	grid-template-columns: repeat(7, 1fr);
+	text-align: center;
+	margin-bottom: 15rpx;
+	padding: 15rpx 0;
+	border-bottom: 1rpx solid #f1f3f4;
+}
+.weekday.data-v-6e8913ab {
+	font-size: 26rpx;
+	color: #6c757d;
+	font-weight: 500;
+}
+.calendar-grid.data-v-6e8913ab {
+	display: grid;
+	grid-template-columns: repeat(7, 1fr);
+	gap: 8rpx;
+	padding: 10rpx 0;
+}
+.calendar-day.data-v-6e8913ab {
+	position: relative;
+	width: 100%;
+	height: 80rpx;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 10rpx;
+	transition: all 0.3s ease;
+	cursor: pointer;
+}
+.calendar-day.other-month.data-v-6e8913ab {
+	opacity: 0.3;
+}
+.calendar-day.other-month .day-number.data-v-6e8913ab {
+	color: #ccc;
+}
+.calendar-day.today.data-v-6e8913ab {
+	background: #4A90E2;
+}
+.calendar-day.checked-in.data-v-6e8913ab {
+	background: #2ecc71;
+}
+.calendar-day.selected.data-v-6e8913ab {
+	background: #ff6b6b;
+}
+.calendar-day.data-v-6e8913ab:active {
+	transform: scale(0.95);
+}
+.day-number.data-v-6e8913ab {
+	font-size: 28rpx;
+	color: #2c3e50;
+	font-weight: 500;
+}
+.calendar-day.today .day-number.data-v-6e8913ab,
+.calendar-day.checked-in .day-number.data-v-6e8913ab,
+.calendar-day.selected .day-number.data-v-6e8913ab {
+	color: #ffffff;
+}
+.checkin-dot.data-v-6e8913ab {
+	position: absolute;
+	bottom: 8rpx;
+	width: 8rpx;
+	height: 8rpx;
+	background: #ffffff;
+	border-radius: 50%;
+}
+.stats-section.data-v-6e8913ab {
+	margin: 30rpx;
+	background: #ffffff;
+	border-radius: 20rpx;
+	padding: 30rpx;
+	box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.1);
+}
+.stats-header.data-v-6e8913ab {
+	margin-bottom: 25rpx;
+}
+.stats-title.data-v-6e8913ab {
+	font-size: 32rpx;
+	font-weight: 600;
+	color: #2c3e50;
+}
+.stats-grid.data-v-6e8913ab {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 20rpx;
+}
+.stat-item.data-v-6e8913ab {
+	display: flex;
+	align-items: center;
+	gap: 20rpx;
+	padding: 25rpx;
+	background: #f8f9fa;
+	border-radius: 15rpx;
+}
+.stat-icon.data-v-6e8913ab {
+	font-size: 40rpx;
+	width: 60rpx;
+	height: 60rpx;
+	background: #ffffff;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.1);
+}
+.stat-content.data-v-6e8913ab {
+	display: flex;
+	flex-direction: column;
+	gap: 5rpx;
+}
+.stat-number.data-v-6e8913ab {
+	font-size: 32rpx;
+	font-weight: bold;
+	color: #2c3e50;
+}
+.stat-label.data-v-6e8913ab {
+	font-size: 24rpx;
+	color: #6c757d;
+}

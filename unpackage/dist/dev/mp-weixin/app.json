@@ -1,0 +1,58 @@
+{
+  "pages": [
+    "pages/splash/splash",
+    "pages/index/index",
+    "pages/word/word",
+    "pages/detail/detail",
+    "pages/calendar/calendar",
+    "pages/notebook/notebook",
+    "pages/discover/discover",
+    "pages/profile/profile",
+    "pages/announcements/announcements"
+  ],
+  "window": {
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "小马单词",
+    "navigationBarBackgroundColor": "#4A90E2",
+    "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#4A90E2",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "static/icon/home.png",
+        "selectedIconPath": "static/icon/home-active.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/calendar/calendar",
+        "iconPath": "static/icon/cat.png",
+        "selectedIconPath": "static/icon/cat-active.png",
+        "text": "学习日历"
+      },
+      {
+        "pagePath": "pages/notebook/notebook",
+        "iconPath": "static/icon/bear.png",
+        "selectedIconPath": "static/icon/bear-active.png",
+        "text": "学习笔记本"
+      },
+      {
+        "pagePath": "pages/discover/discover",
+        "iconPath": "static/icon/dog.png",
+        "selectedIconPath": "static/icon/dog-active.png",
+        "text": "发现"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "iconPath": "static/icon/rabbit.png",
+        "selectedIconPath": "static/icon/rabbit-active.png",
+        "text": "我的"
+      }
+    ]
+  },
+  "usingComponents": {}
+}

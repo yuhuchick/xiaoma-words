@@ -1,0 +1,112 @@
+
+.container.data-v-17181d6d {
+	min-height: 100vh;
+	background: #f8f9fa;
+	padding: 0;
+}
+.status-bar.data-v-17181d6d {
+	height: 44px;
+	width: 100%;
+}
+.header.data-v-17181d6d {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 30rpx;
+	background: #ffffff;
+	border-bottom: 1px solid #e9ecef;
+}
+.title.data-v-17181d6d {
+	font-size: 36rpx;
+	font-weight: 600;
+	color: #2c3e50;
+}
+.add-btn.data-v-17181d6d {
+	width: 60rpx;
+	height: 60rpx;
+	background: #4A90E2;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.add-icon.data-v-17181d6d {
+	font-size: 40rpx;
+	color: #ffffff;
+	font-weight: bold;
+}
+.filter-tabs.data-v-17181d6d {
+	display: flex;
+	padding: 20rpx 30rpx;
+	gap: 30rpx;
+	background: #ffffff;
+	border-bottom: 1px solid #e9ecef;
+}
+.tab.data-v-17181d6d {
+	padding: 15rpx 25rpx;
+	border-radius: 20rpx;
+	background: #f8f9fa;
+}
+.tab.active.data-v-17181d6d {
+	background: #4A90E2;
+}
+.tab text.data-v-17181d6d {
+	font-size: 26rpx;
+	color: #6c757d;
+}
+.tab.active text.data-v-17181d6d {
+	color: #ffffff;
+	font-weight: 600;
+}
+.notes-list.data-v-17181d6d {
+	padding: 30rpx;
+}
+.note-item.data-v-17181d6d {
+	background: #ffffff;
+	border-radius: 15rpx;
+	padding: 30rpx;
+	margin-bottom: 20rpx;
+	box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+}
+.note-header.data-v-17181d6d {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 20rpx;
+}
+.word.data-v-17181d6d {
+	font-size: 32rpx;
+	font-weight: 600;
+	color: #2c3e50;
+}
+.date.data-v-17181d6d {
+	font-size: 24rpx;
+	color: #6c757d;
+}
+.note-content.data-v-17181d6d {
+	margin-bottom: 20rpx;
+}
+.translation.data-v-17181d6d {
+	font-size: 28rpx;
+	color: #495057;
+	margin-bottom: 10rpx;
+	display: block;
+}
+.note-text.data-v-17181d6d {
+	font-size: 26rpx;
+	color: #6c757d;
+	line-height: 1.5;
+}
+.note-tags.data-v-17181d6d {
+	display: flex;
+	gap: 10rpx;
+}
+.tag.data-v-17181d6d {
+	background: #e3f2fd;
+	padding: 8rpx 15rpx;
+	border-radius: 15rpx;
+}
+.tag-text.data-v-17181d6d {
+	font-size: 22rpx;
+	color: #4A90E2;
+}
