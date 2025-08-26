@@ -13,7 +13,7 @@ class PointsManager {
       this.loadFromStorage();
       if (!this.userPointsData) {
         this.userPointsData = {
-          totalPoints: 0,
+          totalPoints: 1e3,
           earnedPoints: 0,
           usedPoints: 0,
           checkInStreak: 0,

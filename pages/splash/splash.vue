@@ -5,7 +5,7 @@
 		
 		<!-- 应用图标 -->
 		<view class="app-icon">
-			<image src="/static/app-icon.svg" mode="aspectFit"></image>
+			<image src="/static/app-logo.png" mode="aspectFit"></image>
 		</view>
 		
 		<!-- 应用名称 -->
@@ -86,6 +86,8 @@ export default {
 	align-items: center;
 	justify-content: center;
 	overflow: hidden;
+	background: linear-gradient(135deg, #ff9a9e 0%, #8e44ad 100%);
+
 }
 
 .background {
@@ -94,7 +96,6 @@ export default {
 	left: 0;
 	width: 100%;
 	height: 100%;
-	background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 	z-index: -1;
 }
 

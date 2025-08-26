@@ -62,6 +62,27 @@
 				"navigationBarTitleText": "公告中心",
 				"navigationStyle": "custom"
 			}
+		},
+		{
+			"path": "pages/goal-settings/goal-settings",
+			"style": {
+				"navigationBarTitleText": "学习目标设置",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/lucky-draw/lucky-draw",
+			"style": {
+				"navigationBarTitleText": "积分抽奖",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/word-category/word-category",
+			"style": {
+				"navigationBarTitleText": "选择分类",
+				"navigationStyle": "custom"
+			}
 		}
 	],
 	"globalStyle": {

@@ -19,7 +19,7 @@ class PointsManager {
 			// 如果没有数据，初始化默认数据
 			if (!this.userPointsData) {
 				this.userPointsData = {
-					totalPoints: 0,
+					totalPoints: 1000,
 					earnedPoints: 0,
 					usedPoints: 0,
 					checkInStreak: 0,

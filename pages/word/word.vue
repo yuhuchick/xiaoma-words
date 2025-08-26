@@ -9,7 +9,7 @@
 				<view class="back-button" @click="goBack">
 					<text class="back-icon">←</text>
 				</view>
-				<text class="title">{{ studyType === 'new' ? '新单词学习' : '单词复习' }}</text>
+				<text class="title">{{ pageTitle }}</text>
 				<view class="progress-info">
 					<text class="progress-text">进度</text>
 					<text class="progress-number">{{ currentIndex }}/{{ totalWords }}</text>
@@ -51,16 +51,17 @@
 			<!-- 中文意思（点击认识后显示） -->
 			<view class="meaning-section" v-if="showMeaning">
 				<view class="meaning-card">
-					<text class="meaning-title">中文意思</text>
+					<text class="meaning-title">📖 中文意思</text>
 					<view class="meaning-content">
-						<text class="meaning-text" v-for="(translation, index) in currentWord.translations" :key="index">
-							{{ translation.type }}. {{ translation.meaning }}
+						<text class="meaning-text" v-for="(translation, index) in currentWord.translation" :key="index">
+							{{ translation }}
 						</text>
 					</view>
-					<view class="example-section" v-if="currentWord.translations[0]?.example">
-						<text class="example-title">例句</text>
-						<text class="example-text">{{ currentWord.translations[0].example }}</text>
-						<text class="example-translation">{{ currentWord.translations[0].exampleTranslation }}</text>
+					<view class="example-section" v-if="currentWord.detail && currentWord.detail.examples">
+						<text class="example-title">💡 例句</text>
+						<text class="example-text" v-for="(example, index) in currentWord.detail.examples" :key="index">
+							{{ example }}
+						</text>
 					</view>
 				</view>
 			</view>
@@ -68,9 +69,9 @@
 			<!-- 难度指示器 -->
 			<view class="difficulty-indicator">
 				<view 
-					v-for="i in 3" 
+					v-for="i in 5" 
 					:key="i"
-					:class="['difficulty-dot', { active: i <= currentWord.difficulty }]"
+					:class="['difficulty-dot', { active: i <= currentWord.collins }]"
 				></view>
 			</view>
 		</view>
@@ -111,6 +112,7 @@
 
 <script>
 import wordManager from '@/utils/wordManager.js'
+import settingsManager from '@/utils/settingsManager.js'
 
 export default {
 	data() {
@@ -124,7 +126,9 @@ export default {
 			newWordsCount: 0,
 			reviewWordsCount: 0,
 			showMeaning: false, // 控制是否显示中文意思
-			autoStart: false // 控制是否自动开始学习
+			autoStart: false, // 控制是否自动开始学习
+			currentCategory: 'all', // 当前学习的分类
+			currentTags: [] // 当前学习的标签
 		}
 	},
 	computed: {
@@ -133,11 +137,34 @@ export default {
 				return 0
 			}
 			return Math.round((this.currentSession.correctAnswers / this.currentSession.totalAnswers) * 100)
+		},
+		
+		pageTitle() {
+			if (this.studyType === 'review') {
+				return '单词复习'
+			}
+			
+			if (this.currentTags.length > 0) {
+				const categoryNames = this.currentTags.map(tag => {
+					const categories = wordManager.getCategories()
+					return categories[tag] ? categories[tag].name : tag
+				})
+				return `${categoryNames.join('+')}学习`
+			}
+			
+			if (this.currentCategory !== 'all') {
+				const categories = wordManager.getCategories()
+				const categoryName = categories[this.currentCategory] ? categories[this.currentCategory].name : this.currentCategory
+				return `${categoryName}学习`
+			}
+			
+			return '新单词学习'
 		}
 	},
 	async onLoad(options) {
 		// 初始化数据管理器
 		await wordManager.init()
+		settingsManager.init()
 		
 		// 加载本地数据
 		wordManager.loadUserStudyDataFromStorage()
@@ -145,13 +172,44 @@ export default {
 		// 获取统计数据
 		this.updateCounts()
 		
-		// 检查是否从首页直接进入新单词学习模式
+		// 检查是否从首页进入指定模式
 		if (options.mode === 'new') {
 			this.studyType = 'new'
-			this.startNewWordsStudy()
+			
+			// 检查是否有分类参数
+			if (options.category) {
+				this.startNewWordsStudy(options.category)
+			} else if (options.tags) {
+				this.startNewWordsStudyByTags(options.tags.split(','))
+			} else {
+				this.startNewWordsStudy()
+			}
+		} else if (options.mode === 'review') {
+			this.studyType = 'review'
+			this.startReviewStudy()
 		} else {
 			// 显示学习建议
 			this.showRecommendations()
+		}
+	},
+
+	onShow() {
+		this._enterTs = Date.now()
+		// 到达学习页即视为签到
+		wordManager.markStudyCheckIn()
+	},
+
+	onHide() {
+		if (this._enterTs) {
+			wordManager.addStudyTime(Date.now() - this._enterTs)
+			this._enterTs = 0
+		}
+	},
+
+	onUnload() {
+		if (this._enterTs) {
+			wordManager.addStudyTime(Date.now() - this._enterTs)
+			this._enterTs = 0
 		}
 	},
 	methods: {
@@ -174,9 +232,20 @@ export default {
 			}
 		},
 		
-		startNewWordsStudy() {
+		startNewWordsStudy(category = 'all') {
+			if (!this.checkDailyLimitAndPrompt()) {
+				return
+			}
 			this.studyType = 'new'
-			this.wordList = wordManager.getNewWords('all', 10)
+			this.currentCategory = category
+			this.currentTags = []
+			
+			if (category === 'all') {
+				this.wordList = wordManager.getNewWords('all', 10)
+			} else {
+				this.wordList = wordManager.getNewWordsByTag(category, 10)
+			}
+			
 			this.totalWords = this.wordList.length
 			this.currentIndex = 0
 			this.autoStart = true // 自动开始学习
@@ -189,9 +258,28 @@ export default {
 				return
 			}
 			
-			// 开始学习会话
-			wordManager.startStudySession('all')
-			this.currentSession = wordManager.currentSession
+			this.loadNextWord()
+		},
+		
+		startNewWordsStudyByTags(tags) {
+			if (!this.checkDailyLimitAndPrompt()) {
+				return
+			}
+			this.studyType = 'new'
+			this.currentCategory = 'all'
+			this.currentTags = tags
+			this.wordList = wordManager.getNewWordsByTags(tags, 10)
+			this.totalWords = this.wordList.length
+			this.currentIndex = 0
+			this.autoStart = true // 自动开始学习
+			
+			if (this.wordList.length === 0) {
+				uni.showToast({
+					title: '没有新单词可学习',
+					icon: 'none'
+				})
+				return
+			}
 			
 			this.loadNextWord()
 		},
@@ -199,9 +287,13 @@ export default {
 		startReviewStudy() {
 			this.studyType = 'review'
 			this.wordList = wordManager.getTodayReviewWords()
+			// 若今日无安排，则回退到本地已认识单词（不计入每日新学目标）
+			if (this.wordList.length === 0) {
+				this.wordList = wordManager.getKnownWordObjects()
+			}
 			this.totalWords = this.wordList.length
 			this.currentIndex = 0
-			this.autoStart = true // 自动开始学习
+			this.autoStart = true
 			
 			if (this.wordList.length === 0) {
 				uni.showToast({
@@ -211,29 +303,73 @@ export default {
 				return
 			}
 			
-			// 开始学习会话
-			wordManager.startStudySession('all')
-			this.currentSession = wordManager.currentSession
-			
 			this.loadNextWord()
 		},
 		
 		loadNextWord() {
-			if (this.currentIndex < this.wordList.length) {
-				this.currentWord = this.wordList[this.currentIndex]
-				this.showMeaning = false // 每次加载新单词时隐藏中文意思
-			} else {
+			if (this.currentIndex >= this.wordList.length) {
 				this.completeStudy()
+				return
+			}
+			
+			this.currentWord = this.wordList[this.currentIndex]
+			this.showMeaning = false
+		},
+		
+		markAsKnown() {
+			this.recordResult(true)
+			// 记录为已认识单词（本地存储）
+			if (this.currentWord && this.currentWord.id) {
+				wordManager.addKnownWord(this.currentWord.word)
 			}
 		},
 		
+		markAsUnknown() {
+			this.recordResult(false)
+		},
+		
+		recordResult(isCorrect) {
+			// 记录学习结果
+			wordManager.recordStudyResult(this.currentWord.id, isCorrect)
+			// 新词学习时记录当日进度（复习模式不计入每日目标）
+			if (this.studyType === 'new') {
+				wordManager.trackDailyNew(this.currentWord.word)
+			}
+			
+			// 显示中文意思
+			this.showMeaning = true
+		},
+		
+		nextWord() {
+			this.currentIndex++
+			this.loadNextWord()
+		},
+		
+		completeStudy() {
+			const stats = wordManager.getStudyStats()
+			uni.showModal({
+				title: '学习完成',
+				content: `本次学习了${this.totalWords}个单词\n总进度：${stats.progress}%`,
+				showCancel: false,
+				success: () => {
+					uni.navigateBack()
+				}
+			})
+		},
+		
+		viewDetails() {
+			// 跳转到单词详情页面
+			uni.navigateTo({
+				url: `/pages/detail/detail?id=${this.currentWord.id}`
+			})
+		},
+		
 		playPronunciation() {
-			if (this.currentWord?.audioUrl) {
+			if (this.currentWord.audio) {
 				// 播放音频
-				uni.showToast({
-					title: '播放发音',
-					icon: 'none'
-				})
+				const audioContext = uni.createInnerAudioContext()
+				audioContext.src = this.currentWord.audio
+				audioContext.play()
 			} else {
 				uni.showToast({
 					title: '暂无音频',
@@ -242,85 +378,41 @@ export default {
 			}
 		},
 		
-		markAsUnknown() {
-			this.recordResult('incorrect')
-		},
-		
-		markAsKnown() {
-			this.recordResult('correct')
-		},
-		
-		recordResult(result) {
-			if (!this.currentWord) return
-			
-			// 记录学习结果
-			wordManager.recordStudyResult(
-				this.currentWord.id, 
-				result, 
-				this.studyType
-			)
-			
-			// 更新会话统计
-			this.currentSession = wordManager.currentSession
-			
-			// 显示结果反馈
-			if (result === 'correct') {
-				uni.showToast({
-					title: '回答正确！',
-					icon: 'success'
-				})
-				// 显示中文意思
-				this.showMeaning = true
-			} else {
-				uni.showToast({
-					title: '继续加油！',
-					icon: 'none'
-				})
-				// 显示中文意思
-				this.showMeaning = true
-			}
-		},
-		
-		viewDetails() {
-			if (this.currentWord) {
-				uni.navigateTo({
-					url: `/pages/detail/detail?wordId=${this.currentWord.id}`
-				})
-			}
-		},
-		
-		completeStudy() {
-			// 结束学习会话
-			const session = wordManager.endStudySession()
-			
-			// 显示学习完成统计
-			uni.showModal({
-				title: '学习完成',
-				content: `本次学习了${session.wordsStudied}个单词\n新单词：${session.newWords}个\n复习：${session.reviewWords}个\n正确率：${Math.round(session.accuracy * 100)}%`,
-				showCancel: false,
-				success: () => {
-					// 重置状态
-					this.currentWord = null
-					this.currentIndex = 0
-					this.totalWords = 0
-					this.wordList = []
-					this.currentSession = null
-					this.showMeaning = false // 学习完成后隐藏中文意思
-					this.autoStart = false // 学习完成后停止自动开始
-					
-					// 更新计数
-					this.updateCounts()
-				}
-			})
-		},
-		
-		nextWord() {
-			this.currentIndex++
-			this.loadNextWord()
-		},
-		
 		goBack() {
 			uni.navigateBack()
+		},
+
+		checkDailyLimitAndPrompt() {
+			const s = settingsManager.getSettings()
+			const learnedToday = wordManager.getTodayNewWordsCount()
+			if (learnedToday >= s.dailyNewWordsTarget) {
+				if (s.allowExceed) {
+					uni.showModal({
+						title: '今日目标已达成',
+						content: `已完成今日目标 ${s.dailyNewWordsTarget} 个。是否调整目标？`,
+						confirmText: '去设置',
+						cancelText: '继续学习',
+						success: (res) => {
+							if (res.confirm) {
+								uni.navigateTo({ url: '/pages/goal-settings/goal-settings' })
+							}
+						}
+					})
+					return true
+				} else {
+					uni.showModal({
+						title: '达到每日上限',
+						content: `今日已学习 ${learnedToday} 个，已达上限 ${s.dailyNewWordsTarget} 个。可前往调整目标。`,
+						showCancel: false,
+						confirmText: '去设置',
+						success: () => {
+							uni.navigateTo({ url: '/pages/goal-settings/goal-settings' })
+						}
+					})
+					return false
+				}
+			}
+			return true
 		},
 		
 		showSettings() {

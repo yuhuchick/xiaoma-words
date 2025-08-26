@@ -5,12 +5,7 @@
 			<swiper class="main-banner-swiper" :indicator-dots="true" :autoplay="true" :interval="4000" :duration="500">
 				<swiper-item v-for="(banner, index) in mainBanners" :key="index" @click="handleMainBannerClick(banner)">
 					<view class="main-banner-item">
-						<view class="banner-bg" :style="{ background: banner.bgColor }"></view>
-						<view class="banner-content">
-							<view class="banner-icon">{{ banner.icon }}</view>
-							<text class="banner-title">{{ banner.title }}</text>
-							<text class="banner-desc">{{ banner.description }}</text>
-						</view>
+						<image class="main-banner-image" :src="banner.image || '/static/banners/welcome.png'" mode="aspectFill"></image>
 					</view>
 				</swiper-item>
 			</swiper>
@@ -86,21 +81,21 @@
 				<view class="stat-card streak">
 					<view class="stat-icon">🔥</view>
 					<view class="stat-content">
-						<text class="stat-number">7</text>
+						<text class="stat-number">{{ streakDays }}</text>
 						<text class="stat-label">连续学习</text>
 					</view>
 				</view>
 				<view class="stat-card time">
 					<view class="stat-icon">⏰</view>
 					<view class="stat-content">
-						<text class="stat-number">2.5</text>
+						<text class="stat-number">{{ studyHours }}</text>
 						<text class="stat-label">学习时长</text>
 					</view>
 				</view>
 				<view class="stat-card words">
 					<view class="stat-icon">📖</view>
 					<view class="stat-content">
-						<text class="stat-number">1850</text>
+						<text class="stat-number">{{ learnedTotal }}</text>
 						<text class="stat-label">已学单词</text>
 					</view>
 				</view>
@@ -121,31 +116,13 @@ export default {
 			newAnnouncementCount: 0,
 			newWordsCount: 0,
 			reviewWordsCount: 0,
+			streakDays: 0,
+			studyHours: 0,
+			learnedTotal: 0,
 			mainBanners: [
-				{
-					id: 1,
-					title: '智能学习算法',
-					description: '科学记忆，高效背单词',
-					icon: '🧠',
-					bgColor: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-					url: '/pages/word/word'
-				},
-				{
-					id: 2,
-					title: '学习挑战赛',
-					description: '参与挑战，赢取奖励',
-					icon: '🏆',
-					bgColor: 'linear-gradient(135deg, #ff6b6b 0%, #ff8e53 100%)',
-					url: '/pages/calendar/calendar'
-				},
-				{
-					id: 3,
-					title: '每日签到',
-					description: '连续签到，获得奖励',
-					icon: '📅',
-					bgColor: 'linear-gradient(135deg, #2ecc71 0%, #27ae60 100%)',
-					url: '/pages/profile/profile'
-				}
+				{ id: 1, image: '/static/banners/image.png', url: '/pages/word/word' },
+				{ id: 2, image: '/static/banners/banner2.png', url: '/pages/word/word' },
+				{ id: 3, image: '/static/banners/banner3.png', url: '/pages/word/word' }
 			]
 		}
 	},
@@ -156,10 +133,6 @@ export default {
 			wordManager.init()
 		])
 		
-		// 加载本地数据
-		announcementManager.loadFromStorage()
-		wordManager.loadUserStudyDataFromStorage()
-		
 		// 获取数据
 		this.banners = announcementManager.banners
 		this.announcements = announcementManager.announcements
@@ -168,13 +141,19 @@ export default {
 		// 获取学习数据
 		this.updateStudyCounts()
 	},
+	onShow() {
+		// 返回首页时刷新统计
+		this.updateStudyCounts()
+	},
 	methods: {
 		updateStudyCounts() {
-			// 获取新单词数量
-			this.newWordsCount = wordManager.getNewWords('all', 100).length
-			
-			// 获取待复习单词数量
-			this.reviewWordsCount = wordManager.getTodayReviewWords().length
+			// 首页显示真实数据
+			const s = wordManager.getHomeSummary()
+			this.newWordsCount = s.toLearn
+			this.reviewWordsCount = s.toReview
+			this.streakDays = s.streak
+			this.studyHours = s.hours
+			this.learnedTotal = s.learnedTotal
 		},
 		
 		handleMainBannerClick(banner) {
@@ -187,13 +166,13 @@ export default {
 		
 		startNewWordsStudy() {
 			uni.navigateTo({
-				url: '/pages/word/word?mode=new'
+				url: '/pages/word-category/word-category'
 			})
 		},
 		
 		startReviewStudy() {
 			uni.navigateTo({
-				url: '/pages/word/word'
+				url: '/pages/word/word?mode=review'
 			})
 		},
 		
@@ -254,13 +233,18 @@ export default {
 	box-shadow: 0 5rpx 20rpx rgba(0, 0, 0, 0.1);
 }
 
+.main-banner-image {
+	width: 100%;
+	height: 100%;
+	display: block;
+}
+
 .main-banner-item {
 	position: relative;
 	width: 100%;
 	height: 100%;
 	display: flex;
 	align-items: center;
-	padding: 60rpx 40rpx 40rpx;
 }
 
 .banner-bg {

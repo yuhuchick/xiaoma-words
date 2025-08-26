@@ -4,10 +4,11 @@
 	background: #ffffff;
 	padding: 0;
 }
-.status-bar.data-v-dd383ca2 {
+
+/* .status-bar {
 	height: 44px;
 	width: 100%;
-}
+} */
 .header.data-v-dd383ca2 {
 	padding: 30rpx;
 	text-align: center;

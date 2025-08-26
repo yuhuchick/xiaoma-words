@@ -21,9 +21,8 @@ const _sfc_main = {
       this.userPoints = utils_pointsManager.pointsManager.getUserPoints();
     },
     goToGoalSettings() {
-      common_vendor.index.showToast({
-        title: "学习目标设置",
-        icon: "none"
+      common_vendor.index.navigateTo({
+        url: "/pages/goal-settings/goal-settings"
       });
     },
     goToStatistics() {
@@ -61,14 +60,8 @@ const _sfc_main = {
           confirmText: "去签到"
         });
       } else {
-        common_vendor.index.showModal({
-          title: "积分抽奖",
-          content: "消耗100积分参与抽奖，有机会获得丰厚奖励！",
-          success: (res) => {
-            if (res.confirm) {
-              this.performLuckyDraw();
-            }
-          }
+        common_vendor.index.navigateTo({
+          url: "/pages/lucky-draw/lucky-draw"
         });
       }
     },

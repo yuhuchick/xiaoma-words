@@ -174,9 +174,8 @@ export default {
 		},
 		
 		goToGoalSettings() {
-			uni.showToast({
-				title: '学习目标设置',
-				icon: 'none'
+			uni.navigateTo({
+				url: '/pages/goal-settings/goal-settings'
 			})
 		},
 		
@@ -219,14 +218,8 @@ export default {
 					confirmText: '去签到'
 				})
 			} else {
-				uni.showModal({
-					title: '积分抽奖',
-					content: '消耗100积分参与抽奖，有机会获得丰厚奖励！',
-					success: (res) => {
-						if (res.confirm) {
-							this.performLuckyDraw()
-						}
-					}
+				uni.navigateTo({
+					url: '/pages/lucky-draw/lucky-draw'
 				})
 			}
 		},
@@ -287,10 +280,10 @@ export default {
 	padding: 0;
 }
 
-.status-bar {
+/* .status-bar {
 	height: 44px;
 	width: 100%;
-}
+} */
 
 .header {
 	padding: 30rpx;

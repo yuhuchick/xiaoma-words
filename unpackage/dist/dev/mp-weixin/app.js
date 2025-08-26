@@ -11,6 +11,9 @@ if (!Math) {
   "./pages/discover/discover.js";
   "./pages/profile/profile.js";
   "./pages/announcements/announcements.js";
+  "./pages/goal-settings/goal-settings.js";
+  "./pages/lucky-draw/lucky-draw.js";
+  "./pages/word-category/word-category.js";
 }
 const _sfc_main = {
   onLaunch: function() {

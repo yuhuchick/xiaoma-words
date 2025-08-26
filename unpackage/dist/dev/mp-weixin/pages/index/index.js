@@ -10,6 +10,9 @@ const _sfc_main = {
       newAnnouncementCount: 0,
       newWordsCount: 0,
       reviewWordsCount: 0,
+      streakDays: 0,
+      studyHours: 0,
+      learnedTotal: 0,
       mainBanners: [
         {
           id: 1,
@@ -43,8 +46,6 @@ const _sfc_main = {
       utils_announcementManager.announcementManager.init(),
       utils_wordManager.wordManager.init()
     ]);
-    utils_announcementManager.announcementManager.loadFromStorage();
-    utils_wordManager.wordManager.loadUserStudyDataFromStorage();
     this.banners = utils_announcementManager.announcementManager.banners;
     this.announcements = utils_announcementManager.announcementManager.announcements;
     this.newAnnouncementCount = utils_announcementManager.announcementManager.getNewAnnouncementCount();
@@ -52,8 +53,9 @@ const _sfc_main = {
   },
   methods: {
     updateStudyCounts() {
-      this.newWordsCount = utils_wordManager.wordManager.getNewWords("all", 100).length;
-      this.reviewWordsCount = utils_wordManager.wordManager.getTodayReviewWords().length;
+      const s = utils_wordManager.wordManager.getHomeSummary();
+      this.newWordsCount = s.toLearn;
+      this.reviewWordsCount = s.toReview;
     },
     handleMainBannerClick(banner) {
       if (banner.url) {
@@ -64,12 +66,12 @@ const _sfc_main = {
     },
     startNewWordsStudy() {
       common_vendor.index.navigateTo({
-        url: "/pages/word/word?mode=new"
+        url: "/pages/word-category/word-category"
       });
     },
     startReviewStudy() {
       common_vendor.index.navigateTo({
-        url: "/pages/word/word"
+        url: "/pages/word/word?mode=review"
       });
     },
     handleBannerClick(banner) {
@@ -134,7 +136,11 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
         f: common_vendor.o(($event) => $options.viewAnnouncement(announcement), index)
       });
     })
-  }) : {});
+  }) : {}, {
+    k: common_vendor.t($data.streakDays),
+    l: common_vendor.t($data.studyHours),
+    m: common_vendor.t($data.learnedTotal)
+  });
 }
 const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__scopeId", "data-v-1cf27b2a"]]);
 wx.createPage(MiniProgramPage);
